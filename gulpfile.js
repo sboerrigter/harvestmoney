@@ -62,7 +62,7 @@ gulp.src = function() {
   return gulp_src.apply(gulp, arguments)
 
   .pipe(plumber(function(error) {
-    //beep();
+    beep();
   }));
 };
 
