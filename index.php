@@ -23,26 +23,30 @@
                 <div class="table">
                     <div class="row">
                         <div class="task">Task</div>
-                        <div class="hours">1,23 uur</div>
-                        <div class="price">€ 123,40</div>
+                        <div class="hours">?,?? uur</div>
+                        <div class="price">€ ???,??</div>
                     </div>
 
                     <div class="row">
                         <div class="task">Task</div>
-                        <div class="hours">1,23 uur</div>
-                        <div class="price">€ 123,40</div>
+                        <div class="hours">?,?? uur</div>
+                        <div class="price">€ ???,??</div>
                     </div>
 
                     <div class="row">
                         <div class="task">Task</div>
-                        <div class="hours">1,23 uur</div>
-                        <div class="price">€ 123,40</div>
+                        <div class="hours">?,?? uur</div>
+                        <div class="price">€ ???,??</div>
                     </div>
 
                     <div class="row total">
                         <div class="task">&nbsp;</div>
-                        <div class="hours">12,34 uur</div>
-                        <div class="price">€ 1.234,56</div>
+                        <div class="hours">
+                            <?php echo number_format($project->hours, 2, ',', '.'); ?> uur
+                        </div>
+                        <div class="price">
+                            € <?php echo number_format($project->price, 2, ',', '.'); ?>
+                        </div>
                     </div>
                 </div>
 
