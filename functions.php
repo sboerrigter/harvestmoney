@@ -63,14 +63,16 @@ foreach ($harvest_projects as $project) {
     $price = ($hours * 85);
 
     /**
-     * Save data to $projects array
+     * Save data to $projects array if there are billable hours
      */
-    $projects[] = (object) array(
-        'id'    => $id,
-        'name'  => $name,
-        'hours' => $hours,
-        'price' => $price
-    );
+    if ($hours > 0) {
+        $projects[] = (object) array(
+            'id'    => $id,
+            'name'  => $name,
+            'hours' => $hours,
+            'price' => $price
+        );
+    }
 }
 
 /**
