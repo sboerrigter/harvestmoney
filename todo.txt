@@ -1,0 +1,11 @@
+get tasks by post id
+tasks view
+style tasks
+improve projects overview styling
+animate "show tasks"
+smooth scroll is buggy
+refactor js
+gulp js (lint, concat, etc...)
+close button
+show uninvoiced hours on projects overview?
+connect to moneybird
