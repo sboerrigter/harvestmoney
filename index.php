@@ -9,7 +9,9 @@
 
     <div class="wrapper">
         <h1>Harvest Money</h1>
-        <section class="projects"></div>
+        <section class="projects">
+            <?php include('loading.php'); ?>
+        </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
