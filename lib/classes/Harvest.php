@@ -12,16 +12,13 @@ final class Harvest
      */
     public static function get($endpoint, $filters)
     {
-        /**
-         * Include configurations
-         */
-        include('config.php');
+        include_once('credentials.php');
 
         /**
          * Request parameters
          */
-        $requesturl = 'https://' . $harvestaccount . '.harvestapp.com/' . $endpoint . '?' . http_build_query($filters);
-        $authorization = base64_encode($harvestuser . ':' . $harvestpassword);
+        $requesturl = 'https://' . HARVESTACCOUNT . '.harvestapp.com/' . $endpoint . '?' . http_build_query($filters);
+        $authorization = base64_encode(HARVESTUSER . ':' . HARVESTPASSWORD);
 
         $headers = array(
             'Accept: application/json',

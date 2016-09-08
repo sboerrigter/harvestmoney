@@ -1,6 +1,6 @@
 <?php
     namespace Sboerrigter\HarvestMoney;
-    
+
     include_once('lib/autoload.php');
 
     /**
@@ -15,7 +15,7 @@
     /**
      * Limit number of projects for performance
      */
-    $projects = array_slice($projects, 0, 5);
+    $projects = array_slice($projects, 0, 1);
 
     foreach ($projects as $project) {
 
