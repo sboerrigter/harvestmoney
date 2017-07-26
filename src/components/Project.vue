@@ -3,6 +3,8 @@
     <div class="content">
       <h3>{{ project.name }}</h3>
 
+      <pre>{{ project }}</pre>
+
       <a class="button is-primary" :href="project.link">Invoice</a>
     </div>
   </div>
