@@ -17,7 +17,7 @@
   export default {
     name: 'header',
 
-    data () {
+    data() {
       return {
         sitename: 'Harvest Money',
         description: 'Create MoneyBird invoices from Harvest reports'

@@ -14,7 +14,7 @@
   export default {
     name: 'footer',
 
-    data () {
+    data() {
       return {
         author: 'Sjoerd Boerrigter',
         url: 'http://sjoerdboerrigter.nl/',
