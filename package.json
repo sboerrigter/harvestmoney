@@ -1,6 +1,6 @@
 {
   "name": "harvestmoney",
-  "description": "A Vue.js project",
+  "description": "A tool to create MoneyBird invoices based on tracked time in Harvest.",
   "version": "1.0.0",
   "author": "Sjoerd Boerrigter <sjoerd@trendwerk.nl>",
   "private": true,

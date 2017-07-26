@@ -1,6 +1,6 @@
 # harvestmoney
 
-> A Vue.js project
+> A tool to create MoneyBird invoices based on tracked time in Harvest
 
 ## Build Setup
 
