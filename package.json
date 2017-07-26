@@ -1,6 +1,6 @@
 {
   "name": "harvestmoney",
-  "description": "A tool to create MoneyBird invoices based on tracked time in Harvest.",
+  "description": "A tool to create MoneyBird invoices from Harvest reports.",
   "version": "1.0.0",
   "author": "Sjoerd Boerrigter <sjoerd@trendwerk.nl>",
   "private": true,

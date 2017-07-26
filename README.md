@@ -1,6 +1,6 @@
 # harvestmoney
 
-> A tool to create MoneyBird invoices based on tracked time in Harvest
+> A tool to create MoneyBird invoices from Harvest reports.
 
 ## Build Setup
 
