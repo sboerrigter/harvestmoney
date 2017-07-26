@@ -1,9 +1,20 @@
+import axios from 'axios';
+import env from '../env.js';
+
 export default class Harvest {
-  // constructor() {
-  //   this.apiKey = 'ABCD';
-  // }
+
+  constructor() {
+    this.clientId = env.HARVEST_CLIENT_ID; // Should be provided in ./env.js
+    this.clientSecret = env.HARVEST_CLIENT_SECRET; // Should be provided in ./env.js
+    this.baseUrl = 'https://ondernemeneninternet.nl/wp-json/wp/v1/posts/';
+  }
 
   getProjects() {
+
+    axios.get(this.baseUrl).then(response => {
+      console.log(response);
+    });
+
     return [
       {
         id: 1,
