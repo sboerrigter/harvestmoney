@@ -1,15 +1,21 @@
 <template>
-  <hero></hero>
+  <div id="app">
+    <app-header></app-header>
+
+    <app-footer></app-footer>
+  </div>
 </template>
 
 <script>
-  import Hero from './components/Hero.vue';
+  import Header from './components/Header.vue';
+  import Footer from './components/Footer.vue';
 
   export default {
     name: 'app',
 
     components: {
-      'hero': Hero,
+      'app-header': Header,
+      'app-footer': Footer,
     },
   }
 </script>

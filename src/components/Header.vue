@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-primary">
+  <header class="hero is-primary">
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
@@ -10,12 +10,12 @@
         </h2>
       </div>
     </div>
-  </section>
+  </header>
 </template>
 
 <script>
   export default {
-    name: 'hero',
+    name: 'header',
 
     data () {
       return {
