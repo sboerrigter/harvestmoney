@@ -1,16 +1,15 @@
 <template>
-  <div id="app">
-    <h1>{{ sitename }}</h1>
-  </div>
+  <hero></hero>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      sitename: 'Harvest Money'
-    }
+  import Hero from './components/Hero.vue';
+
+  export default {
+    name: 'app',
+
+    components: {
+      'hero': Hero,
+    },
   }
-}
 </script>
