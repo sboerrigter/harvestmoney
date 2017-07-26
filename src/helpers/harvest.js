@@ -4,15 +4,21 @@ import env from '../env.js';
 export default class Harvest {
 
   constructor() {
-    this.clientId = env.HARVEST_CLIENT_ID; // Should be provided in ./env.js
-    this.clientSecret = env.HARVEST_CLIENT_SECRET; // Should be provided in ./env.js
-    this.baseUrl = 'https://ondernemeneninternet.nl/wp-json/wp/v1/posts/';
+    this.account = env.HARVEST_ACCOUNT; // Should be provided in ./env.js
+    this.username = env.HARVEST_USERNAME; // Should be provided in ./env.js
+    this.password = env.HARVEST_PASSWORD; // Should be provided in ./env.js
   }
 
   getProjects() {
-
-    axios.get(this.baseUrl).then(response => {
-      console.log(response);
+    axios.request({
+      url: `https://${this.account}.harvestapp.com/projects`,
+      headers: {
+        'Authorization': `Basic ' ${btoa(`${this.username}:${this.password}`)}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }).then(response => {
+      console.log(response.data);
     });
 
     return [
