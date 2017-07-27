@@ -109,7 +109,7 @@ class Harvest
       const entries = [];
 
       results.forEach(result => {
-        const entry = Object.assign(result.day_entry, {'formatted_date': date.format(result.day_entry.spent_at)})
+        const entry = Object.assign(result.day_entry, {'date': date.format(result.day_entry.spent_at)})
         entries.push(entry);
       });
 

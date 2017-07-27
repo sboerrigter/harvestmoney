@@ -4,25 +4,29 @@
       <h3>{{ project.name }}</h3>
 
       <div v-for="task in tasks">
-        {{ task.name }}
+        <div v-for="entry in entries">
+          <div v-if="task.id == entry.task_id">
+            <h4>{{ task.name }}</h4>
+          </div>
+        </div>
       </div>
 
       <table class="table">
         <thead>
           <tr>
-            <th width="20%">Meerwerk</th>
+            <th width="20%">Date</th>
             <th width="60%">Description</th>
             <th width="20%">Hours</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry in entries">
-            <td width="20%">{{ entry.formatted_date }}</td>
+              <td width="20%">{{ entry.formatted_date }}</td>
 
-            <td v-if="entry.notes" width="60%">{{ entry.notes }}</td>
-            <td v-else width="60%"><em>No description</em></td>
+              <td v-if="entry.notes" width="60%">{{ entry.notes }}</td>
+              <td v-else width="60%"><em>No description</em></td>
 
-            <td width="20%">{{ entry.hours }} hours</td>
+              <td width="20%">{{ entry.hours }} hours</td>
           </tr>
         </tbody>
       </table>
