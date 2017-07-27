@@ -39,23 +39,29 @@ export default class Harvest
     );
   }
 
-  get(endpoint) {
+  get(endpoint, params = {}) {
     return axios.request({
       method: 'get',
-      url: `${this.baseUrl}/${endpoint}?access_token=${this.accessToken}`,
+      baseURL: this.baseUrl,
+      url: endpoint,
+      params: Object.assign({'access_token': this.accessToken}, params),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     }).then(response => {
       return response.data;
-    }).catch(error => {
+    }).catch(() => {
       this.getAccessToken();
     });
   }
 
   getProjects() {
-    return this.get('projects').then(results => {
+    const params = {
+      'access_token': this.accessToken,
+    };
+
+    return this.get('projects', params).then(results => {
       const projects = [];
       results.forEach(result => projects.push(result.project));
       return projects;
