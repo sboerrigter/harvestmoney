@@ -1,3 +1,11 @@
+function format(date) {
+  const day = date.split('-')[1];
+  const month = date.split('-')[2];
+  const year = date.split('-')[0];
+
+  return `${day}/${month}/${year}`;
+}
+
 function lastDayOfLastMonth() {
   const date = new Date();
   date.setDate(0);
@@ -18,5 +26,6 @@ function lastDayOfLastMonth() {
 }
 
 export default {
+  format,
   lastDayOfLastMonth
 };

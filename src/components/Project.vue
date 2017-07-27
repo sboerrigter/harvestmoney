@@ -6,15 +6,19 @@
       <table class="table">
         <thead>
           <tr>
-            <th width="80%">Description</th>
+            <th width="20%">Date</th>
+            <th width="70%">Description</th>
             <th width="20%">Hours</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry in entries">
-            <td v-if="entry.day_entry.notes" width="80%">{{ entry.day_entry.notes }}</td>
-            <td v-else width="20%"><em>No description</em></td>
-            <td>{{ entry.day_entry.hours }} hours</td>
+            <td width="20%">{{ entry.formatted_date }}</td>
+
+            <td v-if="entry.notes" width="60%">{{ entry.notes }}</td>
+            <td v-else width="60%"><em>No description</em></td>
+
+            <td width="20%">{{ entry.hours }} hours</td>
           </tr>
         </tbody>
       </table>
