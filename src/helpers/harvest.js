@@ -57,13 +57,15 @@ export default class Harvest
   }
 
   getProjects() {
-    const params = {
-      'access_token': this.accessToken,
-    };
-
-    return this.get('projects', params).then(results => {
+    return this.get('projects').then(results => {
       const projects = [];
-      results.forEach(result => projects.push(result.project));
+      results.forEach(result => {
+        const project = result.project;
+
+        if (project.active && project.billable) {
+          projects.push(project);
+        }
+      });
       return projects;
     });
   }

@@ -5,7 +5,7 @@
 
       <pre>{{ project }}</pre>
 
-      <a class="button is-warning" :href="project.link">Harvest money</a>
+      <a class="button is-warning" :href="project.link">Invoice</a>
     </div>
   </div>
 </template>
