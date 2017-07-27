@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import harvest from '../helpers/harvest.js';
+  import harvest from '../lib/harvest.js';
   import Project from './Project.vue';
   import Loader from './Loader.vue';
 

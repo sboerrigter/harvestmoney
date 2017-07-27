@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import harvest from '../helpers/harvest.js';
+  import harvest from '../lib/harvest.js';
   import Loader from './Loader.vue';
 
   export default {
