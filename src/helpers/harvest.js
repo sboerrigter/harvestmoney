@@ -1,26 +1,16 @@
 import axios from 'axios';
-import env from '../env.js';
+import env from '../../env.js';
 
 export default class Harvest {
 
   constructor() {
-    this.account = env.HARVEST_ACCOUNT; // Should be provided in ./env.js
-    this.username = env.HARVEST_USERNAME; // Should be provided in ./env.js
-    this.password = env.HARVEST_PASSWORD; // Should be provided in ./env.js
+    this.clientId = env.HARVEST_CLIENT_ID; // Should be declared in env.js
+    this.clientSecret = env.HARVEST_CLIENT_SECRET; // Should be declared in env.js
+
+    this.baseUrl = `https://${this.account}.harvestapp.com`;
   }
 
   getProjects() {
-    axios.request({
-      url: `https://${this.account}.harvestapp.com/projects`,
-      headers: {
-        'Authorization': `Basic ' ${btoa(`${this.username}:${this.password}`)}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    }).then(response => {
-      console.log(response.data);
-    });
-
     return [
       {
         id: 1,
