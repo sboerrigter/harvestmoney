@@ -26,7 +26,9 @@
     mounted() {
       const harvest = new Harvest();
 
-      this.projects = harvest.getProjects();
+      harvest.getProjects().then(projects => {
+        this.projects = projects;
+      });
     },
   }
 </script>

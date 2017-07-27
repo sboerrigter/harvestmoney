@@ -49,10 +49,10 @@ export default class Harvest {
   }
 
   getProjects() {
-    return this.get('projects').then(response => {
-
-      console.log(response);
-      return response;
+    return this.get('projects').then(results => {
+      const projects = [];
+      results.forEach(result => projects.push(result.project));
+      return projects;
     });
   }
 }
