@@ -1,5 +1,5 @@
 <template>
-  <footer class="hero is-light">
+  <footer class="hero is-dark">
     <div class="hero-body container">
       <div class="content has-text-centered">
         <p>
