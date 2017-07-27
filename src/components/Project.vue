@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="content" v-if="entries[0].day_entry">
+    <div class="content" v-if="entries[0]">
       <h3>{{ project.name }}</h3>
 
       <table class="table">

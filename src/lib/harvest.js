@@ -1,4 +1,5 @@
 import axios from 'axios';
+import date from './date.js';
 import env from '../../env.js';
 
 class Harvest
@@ -52,15 +53,13 @@ class Harvest
     }).then(response => {
       return response.data;
     }).catch((error) => {
-
-      console.log(error);
-      // this.getAccessToken();
+      this.getAccessToken();
     });
   }
 
   getProjects() {
     return this.get('projects').then(results => {
-      let projects = [];
+      const projects = [];
 
       results.forEach(result => {
         const project = result.project;
@@ -69,10 +68,6 @@ class Harvest
           projects.push(project);
         }
       });
-
-      /* Limit number of projects for testing purpose */
-      // projects = projects.slice(0, 1);
-      // console.log(projects);
 
       return projects;
     });
@@ -83,7 +78,7 @@ class Harvest
       'billable': 'yes',
       'only_unbilled': 'yes',
       'from': '20170101',
-      'to': '20180101',
+      'to': date.lastDayOfLastMonth(),
     }
 
     return this.get(`projects/${id}/entries`, params).then(results => {
