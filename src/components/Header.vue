@@ -1,5 +1,5 @@
 <template>
-  <header class="hero is-primary">
+  <header class="hero is-dark">
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
@@ -19,7 +19,7 @@
 
     data() {
       return {
-        sitename: 'Harvest Money',
+        sitename: '🚜💰 Harvest Money',
         description: 'Create MoneyBird invoices from Harvest reports'
       }
     }
