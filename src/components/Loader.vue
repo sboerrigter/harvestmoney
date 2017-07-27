@@ -1,5 +1,5 @@
 <template>
-  <div class="button is-fullwidth is-large is-loading"></div>
+  <div class="button is-loading is-fullwidth is-large"></div>
 </template>
 
 <script>
@@ -7,3 +7,9 @@
     name: 'loader',
   }
 </script>
+
+<style>
+  .button {
+    border: 0;
+  }
+</style>

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import Harvest from '../helpers/harvest.js';
+  import harvest from '../helpers/harvest.js';
   import Project from './Project.vue';
   import Loader from './Loader.vue';
 
@@ -30,10 +30,8 @@
     },
 
     mounted() {
-      const harvest = new Harvest();
-
-      harvest.getProjects().then(projects => {
-        this.projects = projects;
+      harvest.getProjects().then(response => {
+        this.projects = response;
       });
     },
   }

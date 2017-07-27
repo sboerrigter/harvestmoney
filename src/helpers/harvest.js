@@ -1,7 +1,7 @@
 import axios from 'axios';
 import env from '../../env.js';
 
-export default class Harvest
+class Harvest
 {
   constructor() {
     this.account = env.HARVEST_ACCOUNT; // Should be declared in env.js
@@ -51,14 +51,17 @@ export default class Harvest
       }
     }).then(response => {
       return response.data;
-    }).catch(() => {
-      this.getAccessToken();
+    }).catch((error) => {
+
+      console.log(error);
+      // this.getAccessToken();
     });
   }
 
   getProjects() {
     return this.get('projects').then(results => {
-      const projects = [];
+      let projects = [];
+
       results.forEach(result => {
         const project = result.project;
 
@@ -66,7 +69,29 @@ export default class Harvest
           projects.push(project);
         }
       });
+
+      /* Limit number of projects for testing purpose */
+      // projects = projects.slice(0, 1);
+      // console.log(projects);
+
       return projects;
     });
   }
+
+  getProjectHours(id) {
+    const params = {
+      'billable': 'yes',
+      'only_unbilled': 'yes',
+      'from': '20170101',
+      'to': '20170727',
+    }
+
+    return this.get(`projects/${id}/entries`, params).then(results => {
+      return results;
+    });
+  }
 }
+
+const harvest = new Harvest();
+
+export default harvest;
