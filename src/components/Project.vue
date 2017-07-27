@@ -1,6 +1,6 @@
 <template>
-  <div class="box">
-    <div class="content" v-if="entries[0]">
+  <div class="box" v-if="entries[0]">
+    <div class="content">
       <h3>{{ project.name }}</h3>
 
       <table class="table">
@@ -20,10 +20,6 @@
       </table>
 
       <a class="button is-warning" href="#">Invoice</a>
-    </div>
-
-    <div class="content" v-else>
-      <loader></loader>
     </div>
   </div>
 </template>

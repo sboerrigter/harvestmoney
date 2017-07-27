@@ -5,6 +5,10 @@
 
       <project v-for="project in projects" :project="project" :key="project.id"></project>
     </div>
+
+    <div class="container" v-else>
+      <loader></loader>
+    </div>
   </section>
 </template>
 
