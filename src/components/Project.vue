@@ -3,6 +3,10 @@
     <div class="content">
       <h3>{{ project.name }}</h3>
 
+      <div v-for="task in tasks">
+        {{ task.name }}
+      </div>
+
       <table class="table">
         <thead>
           <tr>
@@ -39,7 +43,7 @@
       'loader': Loader,
     },
 
-    props: ['project'],
+    props: ['project', 'tasks'],
 
     data() {
       return {

@@ -70,14 +70,30 @@ class Harvest
       });
 
       projects.sort((a, b) => {
-          if (a.name < b.name) {
-            return -1;
-          } else {
-            return 1;
-          }
+        if (a.name < b.name) {
+          return -1;
+        } else {
+          return 1;
+        }
       });
 
       return projects;
+    });
+  }
+
+  getTasks() {
+    return this.get(`tasks`).then(results => {
+      const tasks = [];
+
+      results.forEach(result => {
+        const task = result.task;
+
+        if (!task.deactivated) {
+          tasks.push(task);
+        }
+      });
+
+      return tasks;
     });
   }
 

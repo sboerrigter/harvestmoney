@@ -3,7 +3,7 @@
     <div class="container" v-if="projects">
       <h1 class="title">Uninvoiced billable hours</h1>
 
-      <project v-for="project in projects" :project="project" :key="project.id"></project>
+      <project v-for="project in projects" :project="project" :tasks="tasks" :key="project.id"></project>
     </div>
 
     <div class="container" v-else>
@@ -28,12 +28,17 @@
     data() {
       return {
         projects: false,
+        tasks: false,
       }
     },
 
     mounted() {
       harvest.getProjects().then(response => {
         this.projects = response;
+      });
+
+      harvest.getTasks().then(response => {
+        this.tasks = response;
       });
     },
   }
