@@ -6,8 +6,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th width="20%">Date</th>
-            <th width="70%">Description</th>
+            <th width="20%">Meerwerk</th>
+            <th width="60%">Description</th>
             <th width="20%">Hours</th>
           </tr>
         </thead>
