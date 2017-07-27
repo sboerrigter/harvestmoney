@@ -25,6 +25,7 @@
 
     mounted() {
       const harvest = new Harvest();
+
       this.projects = harvest.getProjects();
     },
   }
