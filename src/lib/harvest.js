@@ -78,7 +78,7 @@ class Harvest
       'billable': 'yes',
       'only_unbilled': 'yes',
       'from': '20170101',
-      'to': date.lastDayOfLastMonth(),
+      'to': date.getLastDayOfPreviousMonth(),
     }
 
     return this.get(`projects/${id}/entries`, params).then(results => {

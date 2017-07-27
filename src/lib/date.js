@@ -1,12 +1,22 @@
+/**
+ * Format date
+ *
+ * @param  {string} date in YYYY-MM-DD format
+ * @return {string} in DD/MM/YYYY format
+ */
 function format(date) {
-  const day = date.split('-')[1];
-  const month = date.split('-')[2];
+  const day = date.split('-')[2];
+  const month = date.split('-')[1];
   const year = date.split('-')[0];
 
   return `${day}/${month}/${year}`;
 }
 
-function lastDayOfLastMonth() {
+/**
+ * Get last date of previous month
+ * @return {string} in YYYYMMDD format
+ */
+function getLastDayOfPreviousMonth() {
   const date = new Date();
   date.setDate(0);
 
@@ -27,5 +37,5 @@ function lastDayOfLastMonth() {
 
 export default {
   format,
-  lastDayOfLastMonth
+  getLastDayOfPreviousMonth
 };
