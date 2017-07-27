@@ -15,29 +15,15 @@ export default class Harvest {
   }
 
   authenticate() {
-    /**
-     * Check LocalStorage for access token
-     */
     if (localStorage.getItem('harvest_access_token') !== null) {
+      /* Get access token from LocalStorage */
       this.accessToken = localStorage.getItem('harvest_access_token');
-
-      return this.accessToken;
-
-    /**
-     * Check URL for access token and save it
-     */
-   } else if (document.location.hash) {
-      this.accessToken = document.location.hash.split('access_token=')[1].split('&')[0]
-
+    } else if (document.location.hash) {
+      /* Get access token from URL and save it to LocalStorage */
+      this.accessToken = document.location.hash.split('access_token=')[1].split('&')[0];
       localStorage.setItem('harvest_access_token', this.accessToken);
-
-      return this.accessToken;
-
-    /**
-     * Redirect to Harvest authentication page to get new access token
-     */
     } else {
-
+      /* Redirect to Harvest authentication page */
       document.location.replace(
         this.baseUrl
         + '/oauth2/authorize?client_id='
@@ -49,17 +35,24 @@ export default class Harvest {
     }
   }
 
-  getProjects() {
+  get(endpoint) {
     return axios.request({
-      url: `${this.baseUrl}/projects?access_token=${this.accessToken}`,
+      method: 'get',
+      url: `${this.baseUrl}/${endpoint}?access_token=${this.accessToken}`,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
     }).then(response => {
-      console.log(response.data);
-
       return response.data;
+    });
+  }
+
+  getProjects() {
+    return this.get('projects').then(response => {
+
+      console.log(response);
+      return response;
     });
   }
 }
