@@ -78,12 +78,12 @@ class Harvest
     });
   }
 
-  getProjectHours(id) {
+  getEntries(id) {
     const params = {
       'billable': 'yes',
       'only_unbilled': 'yes',
       'from': '20170101',
-      'to': '20170727',
+      'to': '20180101',
     }
 
     return this.get(`projects/${id}/entries`, params).then(results => {
