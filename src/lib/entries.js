@@ -6,6 +6,7 @@ export default {
     return harvest.getEntries(project.id).then(entries => {
       entries = this.removeAbdundantObjects(entries);
       entries = this.addDate(entries);
+      entries = this.groupByTask(entries, project.tasks);
 
       return entries;
     });
@@ -29,5 +30,33 @@ export default {
     });
 
     return output;
+  },
+
+  groupByTask(oldEntries, oldTasks) {
+    let newTasks = [];
+
+    oldTasks.forEach(task => {
+      let newEntries = [];
+
+      oldEntries.forEach(entry => {
+        if (task.id == entry.task_id) {
+          newEntries.push(entry);
+        }
+      });
+
+      let newTask = Object.assign(task, {'entries': newEntries});
+
+      console.log(newTask.entries.length);
+
+      if (newTask.entries.length !== 0) {
+        newTasks.push(newTask);
+      }
+    });
+
+
+    // @todo remove empty tasks
+
+
+    return newTasks;
   },
 }

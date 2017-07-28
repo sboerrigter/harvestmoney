@@ -1,18 +1,14 @@
 import harvest from './harvest.js';
 
 export default {
-  init () {
-    this.tasks = harvest.getTasks().then(tasks => {
+  get() {
+    return harvest.getTasks().then(tasks => {
       tasks = this.removeAbdundantObjects(tasks);
       tasks = this.filter(tasks);
       tasks = this.order(tasks);
 
       return tasks;
     });
-  },
-
-  get() {
-    return this.tasks;
   },
 
   removeAbdundantObjects(tasks) {
