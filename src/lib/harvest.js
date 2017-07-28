@@ -58,25 +58,7 @@ class Harvest
   }
 
   getProjects() {
-    return this.get('projects').then(results => {
-      const projects = [];
-
-      results.forEach(result => {
-        const project = result.project;
-
-        if (project.active && project.billable) {
-          projects.push(project);
-        }
-      });
-
-      projects.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
-
+    return this.get('projects').then(projects => {
       return projects;
     });
   }

@@ -3,7 +3,7 @@
     <div class="container" v-if="projects">
       <h1 class="title">Uninvoiced billable hours</h1>
 
-      <project v-for="project in projects" :project="project" :tasks="tasks" :key="project.id"></project>
+      <project v-for="project in projects" :project="project" :key="project.id"></project>
     </div>
 
     <div class="container" v-else>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import harvest from '../lib/harvest.js';
+  import projects from '../lib/projects.js';
   import Project from './Project.vue';
   import Loader from './Loader.vue';
 
@@ -27,18 +27,13 @@
 
     data() {
       return {
-        projects: false,
-        tasks: false,
+        projects: false
       }
     },
 
     mounted() {
-      harvest.getProjects().then(response => {
-        this.projects = response;
-      });
-
-      harvest.getTasks().then(response => {
-        this.tasks = response;
+      projects.get().then(projects => {
+        this.projects = projects;
       });
     },
   }
