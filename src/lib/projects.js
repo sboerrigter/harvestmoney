@@ -6,6 +6,7 @@ export default {
       projects = this.removeAbdundantObjects(projects);
       projects = this.filter(projects);
       projects = this.order(projects);
+      projects = this.addTasks(projects);
 
       return projects;
     });
@@ -42,4 +43,18 @@ export default {
       }
     });
   },
+
+  addTasks(projects) {
+    return harvest.getTasks().then(tasks => {
+
+
+
+      projects.forEach(project => {
+          Object.assign(project, {'tasks': tasks});
+          console.log(project);
+      });
+
+      return projects;
+    });
+  }
 }
