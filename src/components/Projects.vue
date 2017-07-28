@@ -7,7 +7,11 @@
     </div>
 
     <div class="container" v-else>
-      <loader></loader>
+      <h1 class="title">Loading...</h1>
+
+      <div class="box">
+        <loader></loader>
+      </div>
     </div>
   </section>
 </template>

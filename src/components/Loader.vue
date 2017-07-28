@@ -1,5 +1,5 @@
 <template>
-  <div class="button is-loading is-fullwidth is-large"></div>
+  <div class="button is-loading is-fullwidth is-large is-light"></div>
 </template>
 
 <script>
