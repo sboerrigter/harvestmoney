@@ -1,15 +1,7 @@
 <template>
-  <div class="box" v-if="entries[0]">
-    <div class="content">
+  <div class="box">
+    <div class="content" v-if="entries[0]">
       <h3>{{ project.name }}</h3>
-
-      <div v-for="task in tasks">
-        <div v-for="entry in entries">
-          <div v-if="task.id == entry.task_id">
-            <h4>{{ task.name }}</h4>
-          </div>
-        </div>
-      </div>
 
       <table class="table">
         <thead>
@@ -21,7 +13,7 @@
         </thead>
         <tbody>
           <tr v-for="entry in entries">
-              <td width="20%">{{ entry.formatted_date }}</td>
+              <td width="20%">{{ entry.date }}</td>
 
               <td v-if="entry.notes" width="60%">{{ entry.notes }}</td>
               <td v-else width="60%"><em>No description</em></td>
@@ -33,11 +25,17 @@
 
       <a class="button is-warning" href="#">Invoice</a>
     </div>
+
+    <div class="content" v-else>
+      <h3>{{ project.name }}</h3>
+
+      <loader></loader>
+    </div>
   </div>
 </template>
 
 <script>
-  import harvest from '../lib/harvest.js';
+  import entries from '../lib/entries.js';
   import Loader from './Loader.vue';
 
   export default {
@@ -47,7 +45,7 @@
       'loader': Loader,
     },
 
-    props: ['project', 'tasks'],
+    props: ['project'],
 
     data() {
       return {
@@ -56,7 +54,7 @@
     },
 
     mounted() {
-      harvest.getEntries(this.project.id).then(response => {
+      entries.get(this.project).then(response => {
         this.entries = response;
       });
     },

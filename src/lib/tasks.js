@@ -31,14 +31,4 @@ export default {
 
     return output;
   },
-
-  // addEntries(tasks) {
-  //   return tasks.get().then(tasks => {
-  //     projects.forEach(project => {
-  //         Object.assign(project, {'tasks': tasks});
-  //     });
-  //
-  //     return projects;
-  //   });
-  // }
 }

@@ -77,14 +77,7 @@ class Harvest
       'to': date.getLastDayOfPreviousMonth(),
     }
 
-    return this.get(`projects/${id}/entries`, params).then(results => {
-      const entries = [];
-
-      results.forEach(result => {
-        const entry = Object.assign(result.day_entry, {'date': date.format(result.day_entry.spent_at)})
-        entries.push(entry);
-      });
-
+    return this.get(`projects/${id}/entries`, params).then(entries => {
       return entries;
     });
   }
