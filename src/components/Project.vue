@@ -1,21 +1,17 @@
 <template>
   <div class="box">
-    <div class="content" v-if="entries[0]">
+    <div class="content" v-if="tasks[0]">
       <h3>{{ project.name }}</h3>
 
-      <pre>
-        {{ entries }}
-      </pre>
-
-      <table class="table" v-for="task in project.tasks">
+      <table class="table" v-for="task in tasks">
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
             <th width="20%">Hours</th>
           </tr>
         </thead>
-        <tbody v-for="entry in entries">
-          <tr v-if="entry.task_id == task.id">
+        <tbody>
+          <tr  v-for="entry in task.entries">
               <td v-if="entry.notes" width="80%">{{ entry.date }} - {{ entry.notes }}</td>
               <td v-else width="80%">{{ entry.date }} - <em>No description</em></td>
 
@@ -50,13 +46,13 @@
 
     data() {
       return {
-        entries: false,
+        tasks: false,
       }
     },
 
     mounted() {
-      entries.get(this.project).then(response => {
-        this.entries = response;
+      entries.get(this.project).then(tasks => {
+        this.tasks = tasks;
       });
     },
   }
