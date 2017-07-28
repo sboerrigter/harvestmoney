@@ -1,4 +1,5 @@
 import harvest from './harvest.js';
+import tasks from './tasks.js';
 
 export default {
   get() {
@@ -45,16 +46,12 @@ export default {
   },
 
   addTasks(projects) {
-    return harvest.getTasks().then(tasks => {
-
-
-
+    return tasks.get().then(tasks => {
       projects.forEach(project => {
           Object.assign(project, {'tasks': tasks});
-          console.log(project);
       });
 
       return projects;
     });
-  }
+  },
 }

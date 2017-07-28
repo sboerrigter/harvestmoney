@@ -64,17 +64,7 @@ class Harvest
   }
 
   getTasks() {
-    return this.get(`tasks`).then(results => {
-      const tasks = [];
-
-      results.forEach(result => {
-        const task = result.task;
-
-        if (!task.deactivated) {
-          tasks.push(task);
-        }
-      });
-
+    return this.get(`tasks`).then(tasks => {
       return tasks;
     });
   }
