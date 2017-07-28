@@ -1,16 +1,17 @@
+import entries from './entries.js';
 import harvest from './harvest.js';
 import tasks from './tasks.js';
 
 export default {
   get() {
-    return harvest.getProjects().then(projects => {
-      projects = this.removeAbdundantObjects(projects);
-      projects = this.filter(projects);
-      projects = this.order(projects);
-      projects = this.addTasks(projects);
+    return harvest.getProjects()
+      .then(projects => {
+        projects = this.removeAbdundantObjects(projects);
+        projects = this.filter(projects);
+        projects = this.order(projects);
 
-      return projects;
-    });
+        return this.addTasks(projects);
+      });
   },
 
   removeAbdundantObjects(projects) {
