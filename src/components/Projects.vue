@@ -1,13 +1,13 @@
 <template>
   <section class="section">
     <div class="container" v-if="projects">
-      <h1 class="title">Uninvoiced billable hours</h1>
+      <h1 class="title">Ongefactureerde uren</h1>
 
       <project v-for="project in projects" :project="project" :key="project.id"></project>
     </div>
 
     <div class="container" v-else>
-      <h1 class="title">Loading...</h1>
+      <h1 class="title">Laden...</h1>
 
       <div class="box">
         <loader></loader>

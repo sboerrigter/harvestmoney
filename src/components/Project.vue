@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
-            <th width="20%">{{ task.total }} hours</th>
+            <th width="20%">{{ task.total }} uur</th>
           </tr>
         </thead>
         <tbody>
@@ -15,12 +15,12 @@
               <td v-if="entry.notes" width="80%">{{ entry.date }} - {{ entry.notes }}</td>
               <td v-else width="80%">{{ entry.date }} - <em>No description</em></td>
 
-              <td width="20%">{{ entry.hours }} hours</td>
+              <td width="20%">{{ entry.hours }} uur</td>
           </tr>
         </tbody>
       </table>
 
-      <a class="button is-warning" href="#">Invoice</a>
+      <a class="button is-warning" href="#">Factureer</a>
     </div>
   </div>
 </template>

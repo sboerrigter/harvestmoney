@@ -20,7 +20,7 @@
     data() {
       return {
         sitename: '🚜💰 Harvest Money',
-        description: 'Create MoneyBird invoices from Harvest reports'
+        description: 'Maak MoneyBird facturen van Harvest reports'
       }
     }
   }
