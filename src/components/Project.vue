@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
-            <th width="20%">Hours</th>
+            <th width="20%">{{ task.total }} hours</th>
           </tr>
         </thead>
         <tbody>
