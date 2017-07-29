@@ -1,9 +1,9 @@
 <template>
-  <div class="box">
-    <div class="content" v-if="tasks[0]">
+  <div class="box" v-if="entries[0]">
+    <div class="content">
       <h3>{{ project.name }}</h3>
 
-      <table class="table" v-for="task in tasks">
+      <table class="table" v-for="task in entries">
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
@@ -21,12 +21,6 @@
       </table>
 
       <a class="button is-warning" href="#">Invoice</a>
-    </div>
-
-    <div class="content" v-else>
-      <h3>{{ project.name }}</h3>
-
-      <loader></loader>
     </div>
   </div>
 </template>
@@ -46,13 +40,13 @@
 
     data() {
       return {
-        tasks: false,
+        entries: false,
       }
     },
 
     mounted() {
-      entries.get(this.project).then(tasks => {
-        this.tasks = tasks;
+      entries.get(this.project).then(entries => {
+        this.entries = entries;
       });
     },
   }
