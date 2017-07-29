@@ -7,9 +7,3 @@
     name: 'loader',
   }
 </script>
-
-<style>
-  .button {
-    border: 0;
-  }
-</style>
