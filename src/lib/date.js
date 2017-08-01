@@ -21,7 +21,7 @@ function getLastDayOfPreviousMonth() {
   date.setDate(0);
 
   let year = date.getFullYear().toString();
-  let month = (date.getMonth() + 2).toString(); // Should be changed to + 1 when finished
+  let month = (date.getMonth() + 1).toString();
   let day = date.getDate().toString();
 
   if (month.length !== 2) {
