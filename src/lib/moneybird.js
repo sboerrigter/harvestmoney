@@ -5,6 +5,7 @@ class Moneybird
 {
   constructor() {
     this.clientId = env.MONEYBIRD_CLIENT_ID; // Should be declared in env.js
+    this.clientSecret = env.MONEYBIRD_CLIENT_SECRET; // Should be declared in env.js
     this.accessToken = false;
 
     this.baseUrl = `https://moneybird.com`;
@@ -17,18 +18,34 @@ class Moneybird
 
     if (url.searchParams.get('code')) {
       /* Get access token from URL and save it to LocalStorage */
-      this.accessToken = url.searchParams.get('code');
+      const requestToken = url.searchParams.get('code');
+
+      axios.request({
+        method: 'post',
+        baseURL: this.baseUrl,
+        url: 'oauth/token',
+        params: {
+          'client_id': this.clientId,
+          'client_secret': this.clientSecret,
+          'code': requestToken,
+          'redirect_uri': document.location.origin,
+          'grant_type': 'authorization_code',
+        },
+      }).then(response => {
+        console.log(response.data);
+      })
+
       localStorage.setItem('moneybird_access_token', this.accessToken);
     } else if (localStorage.getItem('moneybird_access_token') !== null) {
       /* Get access token from LocalStorage */
       this.accessToken = localStorage.getItem('moneybird_access_token');
     } else {
       /* Get new access token */
-      this.getAccessToken();
+      this.getRequestToken();
     }
   }
 
-  getAccessToken() {
+  getRequestToken() {
     document.location.replace(
       this.baseUrl
       + '/oauth/authorize?client_id='
@@ -39,24 +56,28 @@ class Moneybird
     );
   }
 
-  // get(endpoint, params = {}) {
-  //   return axios.request({
-  //     method: 'get',
-  //     baseURL: this.baseUrl,
-  //     url: endpoint,
-  //     params: params,
-  //   }).then(response => {
-  //     return response.data;
-  //   }).catch((error) => {
-  //     // this.getAccessToken();
-  //   });
-  // }
-  //
-  // getProjects() {
-  //   return this.get('projects').then(projects => {
-  //     return projects;
-  //   });
-  // }
+  get(endpoint, params = {}) {
+    return axios.request({
+      method: 'get',
+      baseURL: this.baseUrl,
+      url: endpoint,
+      params: params,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.accessToken,
+      }
+    }).then(response => {
+      return response.data;
+    }).catch((error) => {
+      // this.getAccessToken();
+    });
+  }
+
+  getInvoices() {
+    return this.get('sales_invoices').then(projects => {
+      return projects;
+    });
+  }
 }
 
 const moneybird = new Moneybird();
