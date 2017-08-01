@@ -26,7 +26,8 @@
 </template>
 
 <script>
-  import entries from '../lib/entries.js';
+  import entries from '../lib/entries';
+  import Moneybird from '../lib/moneybird';
   import Loader from './Loader.vue';
 
   export default {

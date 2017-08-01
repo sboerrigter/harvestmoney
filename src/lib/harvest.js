@@ -7,7 +7,6 @@ class Harvest
   constructor() {
     this.account = env.HARVEST_ACCOUNT; // Should be declared in env.js
     this.clientId = env.HARVEST_CLIENT_ID; // Should be declared in env.js
-    this.clientSecret = env.HARVEST_CLIENT_SECRET; // Should be declared in env.js
     this.accessToken = false;
 
     this.baseUrl = `https://${this.account}.harvestapp.com`;
