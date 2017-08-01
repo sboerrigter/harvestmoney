@@ -1,6 +1,6 @@
-# harvestmoney
+# Harvest Money
 
-> A tool to create MoneyBird invoices from Harvest reports.
+Easily create MoneyBird invoices from Harvest reports.
 
 ## Build Setup
 
