@@ -1,39 +1,45 @@
 import axios from 'axios';
+import ClientOAuth2 from 'client-oauth2';
 import env from '../../env.js';
 
 class Moneybird
 {
   constructor() {
-    this.clientId = env.MONEYBIRD_CLIENT_ID; // Should be declared in env.js
-    this.clientSecret = env.MONEYBIRD_CLIENT_SECRET; // Should be declared in env.js
-    this.accessToken = false;
+    this.baseUrl = 'https://moneybird.com';
+    this.currentUrl = new URL(document.location);
 
-    this.baseUrl = `https://moneybird.com`;
+    console.log();
+
+    this.moneybirdAuth = new ClientOAuth2({
+      clientId: env.MONEYBIRD_CLIENT_ID,
+      clientSecret: env.MONEYBIRD_CLIENT_SECRET,
+      accessTokenUri: `${this.baseUrl}/oauth/token`,
+      authorizationUri: `${this.baseUrl}/oauth/authorize`,
+      redirectUri: this.currentUrl.origin,
+      scopes: ['sales_invoices']
+    })
 
     this.authenticate();
   }
 
   authenticate() {
-    const url = new URL(document.location);
+    const code = this.currentUrl.searchParams.get('code');
 
-    if (url.searchParams.get('code')) {
-      /* Get access token from URL and save it to LocalStorage */
-      const requestToken = url.searchParams.get('code');
-
-      axios.request({
+    if (code) {
+      return axios.request({
         method: 'post',
         baseURL: this.baseUrl,
         url: 'oauth/token',
-        params: {
-          'client_id': this.clientId,
-          'client_secret': this.clientSecret,
-          'code': requestToken,
-          'redirect_uri': document.location.origin,
-          'grant_type': 'authorization_code',
-        },
+        data: {
+          client_id: env.MONEYBIRD_CLIENT_ID,
+          client_secret: env.MONEYBIRD_CLIENT_SECRET,
+          code: code,
+          redirect_uri: this.currentUrl.origin,
+          grant_type: 'authorization_code',
+        }
       }).then(response => {
         console.log(response.data);
-      })
+      });
 
       localStorage.setItem('moneybird_access_token', this.accessToken);
     } else if (localStorage.getItem('moneybird_access_token') !== null) {
@@ -46,14 +52,7 @@ class Moneybird
   }
 
   getRequestToken() {
-    document.location.replace(
-      this.baseUrl
-      + '/oauth/authorize?client_id='
-      + this.clientId
-      + '&redirect_uri='
-      + document.location.origin
-      + '&response_type=code'
-    );
+    document.location.replace(this.moneybirdAuth.code.getUri());
   }
 
   get(endpoint, params = {}) {
