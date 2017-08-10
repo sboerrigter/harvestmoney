@@ -8,8 +8,6 @@ class Moneybird
     this.baseUrl = 'https://moneybird.com';
     this.currentUrl = new URL(document.location);
 
-    console.log();
-
     this.moneybirdAuth = new ClientOAuth2({
       clientId: env.MONEYBIRD_CLIENT_ID,
       clientSecret: env.MONEYBIRD_CLIENT_SECRET,
@@ -23,28 +21,15 @@ class Moneybird
   }
 
   authenticate() {
-    const code = this.currentUrl.searchParams.get('code');
-
-    if (code) {
-      return axios.request({
-        method: 'post',
-        baseURL: this.baseUrl,
-        url: 'oauth/token',
-        data: {
-          client_id: env.MONEYBIRD_CLIENT_ID,
-          client_secret: env.MONEYBIRD_CLIENT_SECRET,
-          code: code,
-          redirect_uri: this.currentUrl.origin,
-          grant_type: 'authorization_code',
-        }
-      }).then(response => {
-        console.log(response.data);
-      });
-
-      localStorage.setItem('moneybird_access_token', this.accessToken);
-    } else if (localStorage.getItem('moneybird_access_token') !== null) {
+    const requestToken = this.currentUrl.searchParams.get('code');
+    if (localStorage.getItem('moneybird_access_token') !== null) {
       /* Get access token from LocalStorage */
       this.accessToken = localStorage.getItem('moneybird_access_token');
+    } else if (requestToken) {
+      this.getAccessToken(requestToken).then(response => {
+        this.accessToken = response.access_token;
+        localStorage.setItem('moneybird_access_token', this.accessToken);
+      });
     } else {
       /* Get new access token */
       this.getRequestToken();
@@ -53,6 +38,27 @@ class Moneybird
 
   getRequestToken() {
     document.location.replace(this.moneybirdAuth.code.getUri());
+  }
+
+  getAccessToken(requestToken) {
+    return axios.request({
+      method: 'post',
+      baseURL: this.baseUrl,
+      url: 'oauth/token',
+      params: {
+        client_id: env.MONEYBIRD_CLIENT_ID,
+        client_secret: env.MONEYBIRD_CLIENT_SECRET,
+        code: requestToken,
+        redirect_uri: this.currentUrl.origin,
+        grant_type: 'authorization_code',
+      },
+      headers: {
+        'Content-Type': 'text/plain',
+      }
+    }).then(response => {
+      console.log(response);
+      return response.data;
+    });
   }
 
   get(endpoint, params = {}) {
