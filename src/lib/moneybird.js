@@ -1,5 +1,4 @@
 import axios from 'axios';
-import ClientOAuth2 from 'client-oauth2';
 import env from '../../env.js';
 
 class Moneybird
@@ -7,58 +6,55 @@ class Moneybird
   constructor() {
     this.baseUrl = 'https://moneybird.com';
     this.currentUrl = new URL(document.location);
-
-    this.moneybirdAuth = new ClientOAuth2({
-      clientId: env.MONEYBIRD_CLIENT_ID,
-      clientSecret: env.MONEYBIRD_CLIENT_SECRET,
-      accessTokenUri: `${this.baseUrl}/oauth/token`,
-      authorizationUri: `${this.baseUrl}/oauth/authorize`,
-      redirectUri: this.currentUrl.origin,
-      scopes: ['sales_invoices']
-    })
-
-    this.authenticate();
+    this.accessToken = this.getAccessToken();
   }
 
-  authenticate() {
-    const requestToken = this.currentUrl.searchParams.get('code');
+  getAccessToken() {
+    /* Get access token from LocalStorage */
     if (localStorage.getItem('moneybird_access_token') !== null) {
-      /* Get access token from LocalStorage */
-      this.accessToken = localStorage.getItem('moneybird_access_token');
-    } else if (requestToken) {
-      this.getAccessToken(requestToken).then(response => {
-        this.accessToken = response.access_token;
-        localStorage.setItem('moneybird_access_token', this.accessToken);
-      });
-    } else {
-      /* Get new access token */
-      this.getRequestToken();
+      return localStorage.getItem('moneybird_access_token');
     }
+
+    /* Get access token from requestToken */
+    const requestToken = this.currentUrl.searchParams.get('code');
+
+    console.log(requestToken);
+
+    if (requestToken !== null) {
+      return axios.request({
+        method: 'post',
+        baseURL: this.baseUrl,
+        url: 'oauth/token',
+        params: {
+          client_id: env.MONEYBIRD_CLIENT_ID,
+          client_secret: env.MONEYBIRD_CLIENT_SECRET,
+          code: requestToken,
+          redirect_uri: this.currentUrl.origin,
+          grant_type: 'authorization_code',
+        },
+        headers: {
+          'Content-Type': 'text/plain',
+        }
+      }).then(response => {
+        localStorage.setItem('moneybird_access_token', response.data.access_token);
+
+        return response.data.access_token;
+      });
+    }
+
+    /* Get a new requestToken */
+    this.getRequestToken();
   }
 
   getRequestToken() {
-    document.location.replace(this.moneybirdAuth.code.getUri());
-  }
-
-  getAccessToken(requestToken) {
-    return axios.request({
-      method: 'post',
-      baseURL: this.baseUrl,
-      url: 'oauth/token',
-      params: {
-        client_id: env.MONEYBIRD_CLIENT_ID,
-        client_secret: env.MONEYBIRD_CLIENT_SECRET,
-        code: requestToken,
-        redirect_uri: this.currentUrl.origin,
-        grant_type: 'authorization_code',
-      },
-      headers: {
-        'Content-Type': 'text/plain',
-      }
-    }).then(response => {
-      console.log(response);
-      return response.data;
-    });
+    document.location.replace(
+      this.baseUrl
+      + '/oauth/authorize?client_id='
+      + env.MONEYBIRD_CLIENT_ID
+      + '&redirect_uri='
+      + this.currentUrl.origin
+      + '&response_type=code'
+    );
   }
 
   get(endpoint, params = {}) {
@@ -74,13 +70,13 @@ class Moneybird
     }).then(response => {
       return response.data;
     }).catch((error) => {
-      // this.getAccessToken();
+      this.getRequestToken();
     });
   }
 
   getInvoices() {
-    return this.get('sales_invoices').then(projects => {
-      return projects;
+    return this.get('sales_invoices').then(response => {
+      return response;
     });
   }
 }
