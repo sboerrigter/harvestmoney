@@ -62,12 +62,12 @@ class Moneybird
     );
   }
 
-  get(endpoint, params = {}) {
+  post(endpoint, params = {}) {
     return axios.request({
-      method: 'get',
+      method: 'post',
       baseURL: this.baseUrl,
-      url: endpoint,
-      params: params,
+      url: `api/v2/${this.administrationId}/${endpoint}`,
+      data: params,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.accessToken,
@@ -75,12 +75,24 @@ class Moneybird
     }).then(response => {
       return response.data;
     }).catch((error) => {
-      // this.getRequestToken();
+      this.getRequestToken();
     });
   }
 
   createInvoice() {
-    return this.get(`api/v2/${this.administrationId}/sales_invoices.json`).then(response => {
+    return this.post('sales_invoices', {
+      "sales_invoice": {
+        "reference": "Meerwerk",
+        "contact_id": 134619291935835380, // Trendwerk
+        "details_attributes": {
+          "0": {
+            "amount": "2,45 uur",
+            "description": "Testing testing bliep bliep!",
+            "price": "85"
+          }
+        }
+      }
+    }).then(response => {
       return response;
     });
   }
