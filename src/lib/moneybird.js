@@ -4,8 +4,12 @@ import env from '../../env.js';
 class Moneybird
 {
   constructor() {
+    this.clientId = env.MONEYBIRD_CLIENT_ID; // Should be declared in env.js
+    this.clientSecret = env.MONEYBIRD_CLIENT_SECRET; // Should be declared in env.js
+
     this.baseUrl = 'https://moneybird.com';
     this.currentUrl = new URL(document.location);
+
     this.accessToken = this.getAccessToken();
   }
 
@@ -26,8 +30,8 @@ class Moneybird
         baseURL: this.baseUrl,
         url: 'oauth/token',
         params: {
-          client_id: env.MONEYBIRD_CLIENT_ID,
-          client_secret: env.MONEYBIRD_CLIENT_SECRET,
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
           code: requestToken,
           redirect_uri: this.currentUrl.origin,
           grant_type: 'authorization_code',
@@ -50,7 +54,7 @@ class Moneybird
     document.location.replace(
       this.baseUrl
       + '/oauth/authorize?client_id='
-      + env.MONEYBIRD_CLIENT_ID
+      + this.clientId
       + '&redirect_uri='
       + this.currentUrl.origin
       + '&response_type=code'
