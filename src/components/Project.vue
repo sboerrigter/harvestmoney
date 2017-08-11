@@ -20,14 +20,18 @@
         </tbody>
       </table>
 
-      <a class="button is-warning" href="#">Factureer</a>
+      <button class="button is-warning" @click="invoice" href="#">Factureer</button>
+
+      <pre v-if="test">
+        {{ test }}
+      </pre>
     </div>
   </div>
 </template>
 
 <script>
   import entries from '../lib/entries';
-  import Moneybird from '../lib/moneybird';
+  import moneybird from '../lib/moneybird';
   import Loader from './Loader.vue';
 
   export default {
@@ -42,6 +46,7 @@
     data() {
       return {
         entries: false,
+        test: false,
       }
     },
 
@@ -50,5 +55,13 @@
         this.entries = entries;
       });
     },
+
+    methods: {
+      invoice: function () {
+        moneybird.createInvoice().then(response => {
+          this.test = response;
+        });
+      }
+    }
   }
 </script>

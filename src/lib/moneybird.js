@@ -6,6 +6,7 @@ class Moneybird
   constructor() {
     this.clientId = env.MONEYBIRD_CLIENT_ID; // Should be declared in env.js
     this.clientSecret = env.MONEYBIRD_CLIENT_SECRET; // Should be declared in env.js
+    this.administrationId = env.MONEYBIRD_ADMINISTRATION_ID; // Should be declared in env.js
 
     this.baseUrl = 'https://moneybird.com';
     this.currentUrl = new URL(document.location);
@@ -46,7 +47,7 @@ class Moneybird
       });
     }
 
-    /* Get a new requestToken */
+    /* Get a new request token */
     this.getRequestToken();
   }
 
@@ -74,12 +75,12 @@ class Moneybird
     }).then(response => {
       return response.data;
     }).catch((error) => {
-      this.getRequestToken();
+      // this.getRequestToken();
     });
   }
 
-  getInvoices() {
-    return this.get('sales_invoices').then(response => {
+  createInvoice() {
+    return this.get(`api/v2/${this.administrationId}/sales_invoices.json`).then(response => {
       return response;
     });
   }
