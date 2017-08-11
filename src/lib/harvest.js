@@ -7,28 +7,35 @@ class Harvest
   constructor() {
     this.account = env.HARVEST_ACCOUNT; // Should be declared in env.js
     this.clientId = env.HARVEST_CLIENT_ID; // Should be declared in env.js
-    this.accessToken = false;
 
     this.baseUrl = `https://${this.account}.harvestapp.com`;
+    this.currentUrl = new URL(document.location);
 
-    this.authenticate();
-  }
-
-  authenticate() {
-    if (document.location.hash) {
-      /* Get access token from URL and save it to LocalStorage */
-      this.accessToken = document.location.hash.split('access_token=')[1].split('&')[0];
-      localStorage.setItem('harvest_access_token', this.accessToken);
-    } else if (localStorage.getItem('harvest_access_token') !== null) {
-      /* Get access token from LocalStorage */
-      this.accessToken = localStorage.getItem('harvest_access_token');
-    } else {
-      /* Get new access token */
-      this.getAccessToken();
-    }
+    this.accessToken = false;
+    this.accessToken = this.getAccessToken();
   }
 
   getAccessToken() {
+    /* Get access token from LocalStorage */
+    if (localStorage.getItem('harvest_access_token') !== null) {
+      return localStorage.getItem('harvest_access_token');
+    }
+
+    /* Get access token from URL */
+    if (this.currentUrl.hash.includes('access_token')) {
+      const accessToken = this.currentUrl.hash.split('access_token=')[1].split('&')[0];
+
+      localStorage.setItem('harvest_access_token', accessToken);
+
+      return accessToken;
+    }
+
+    /* Get a new access token */
+    this.getNewAccessToken();
+  }
+
+
+  getNewAccessToken() {
     document.location.replace(
       this.baseUrl
       + '/oauth2/authorize?client_id='
@@ -52,7 +59,7 @@ class Harvest
     }).then(response => {
       return response.data;
     }).catch((error) => {
-      this.getAccessToken();
+      this.getNewAccessToken();
     });
   }
 
