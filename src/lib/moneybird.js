@@ -23,8 +23,6 @@ class Moneybird
     /* Get access token from requestToken */
     const requestToken = this.currentUrl.searchParams.get('code');
 
-    console.log(requestToken);
-
     if (requestToken !== null) {
       return axios.request({
         method: 'post',

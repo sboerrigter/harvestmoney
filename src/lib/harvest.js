@@ -34,7 +34,6 @@ class Harvest
     this.getNewAccessToken();
   }
 
-
   getNewAccessToken() {
     document.location.replace(
       this.baseUrl
@@ -64,15 +63,11 @@ class Harvest
   }
 
   getProjects() {
-    return this.get('projects').then(projects => {
-      return projects;
-    });
+    return this.get('projects');
   }
 
   getTasks() {
-    return this.get(`tasks`).then(tasks => {
-      return tasks;
-    });
+    return this.get(`tasks`);
   }
 
   getEntries(id) {
