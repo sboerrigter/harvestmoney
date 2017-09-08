@@ -67,7 +67,7 @@ class Harvest
   }
 
   getTasks() {
-    return this.get(`tasks`);
+    return this.get('tasks');
   }
 
   getEntries(id) {
