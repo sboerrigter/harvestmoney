@@ -1,4 +1,5 @@
 import axios from 'axios';
+import date from './date.js';
 import env from '../../env.js';
 
 class Moneybird
@@ -7,6 +8,7 @@ class Moneybird
     this.clientId = env.MONEYBIRD_CLIENT_ID; // Should be declared in env.js
     this.clientSecret = env.MONEYBIRD_CLIENT_SECRET; // Should be declared in env.js
     this.administrationId = env.MONEYBIRD_ADMINISTRATION_ID; // Should be declared in env.js
+    this.hourlyRate = env.HOURLY_RATE; // Should be declared in env.js
 
     this.baseUrl = 'https://moneybird.com';
     this.currentUrl = new URL(document.location);
@@ -37,8 +39,6 @@ class Moneybird
 
     /* Get access token from requestToken */
     const requestToken = this.currentUrl.searchParams.get('code');
-
-    console.log(requestToken);
 
     if (requestToken !== null) {
       return axios.request({
@@ -125,22 +125,38 @@ class Moneybird
     });
   }
 
-  createInvoice() {
+  createInvoice(entries) {
     return this.post('sales_invoices', {
-      "sales_invoice": {
-        "reference": "Meerwerk",
-        "contact_id": 134619291935835380, // Trendwerk
-        "details_attributes": {
-          "0": {
-            "amount": "2,45 uur",
-            "description": "Testing testing bliep bliep!",
-            "price": "85"
-          }
-        }
+      'sales_invoice': {
+        'reference': `Uren ${date.getLastMonthName()} 2017`,
+        'contact_id': 134619291935835380, // Trendwerk
+        'details_attributes': this.formatEntries(entries),
       }
-    }).then(response => {
-      return response;
     });
+  }
+
+  formatEntries(entries) {
+    const output = [];
+
+    entries.forEach(task => {
+      if (task.name !== 'Meerwerk') {
+        output.push({
+          'amount': `${task.total.toLocaleString('nl')} uur`,
+          'description': task.name,
+          'price': this.hourlyRate
+        });
+      } else {
+        task.entries.forEach(entry => {
+          output.push({
+            'amount': `${entry.hours.toLocaleString('nl')} uur`,
+            'description': `${entry.date}: ${entry.notes}`,
+            'price': this.hourlyRate
+          });
+        });
+      }
+    });
+
+    return output;
   }
 }
 

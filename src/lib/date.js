@@ -35,7 +35,29 @@ function getLastDayOfPreviousMonth() {
   return `${year}${month}${day}`;
 }
 
+function getLastMonthName() {
+  const date = new Date();
+
+  const monthNames = [
+    'Januari',
+    'Februari',
+    'Maart',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Augustus',
+    'September',
+    'Oktober',
+    'November',
+    'December'
+  ];
+
+  return monthNames[date.getMonth() - 1];
+}
+
 export default {
   format,
-  getLastDayOfPreviousMonth
+  getLastDayOfPreviousMonth,
+  getLastMonthName
 };
