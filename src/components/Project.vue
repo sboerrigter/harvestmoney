@@ -27,8 +27,8 @@
             Selecteer contact
           </option>
 
-          <option v-for="contact in contacts" v-bind:value="contact.id">
-            {{ contact.name }}
+          <option v-for="(name, id) in contacts" v-bind:value="id">
+            {{ name }}
           </option>
         </select>
       </div>

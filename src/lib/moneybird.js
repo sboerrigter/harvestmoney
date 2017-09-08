@@ -67,7 +67,7 @@ class Moneybird
   }
 
   getContacts() {
-    const contacts = [];
+    const contacts = {};
     const url = `${this.baseUrl}/api/v2/${this.administrationId}/contacts?per_page=100`;
 
     return new Promise(resolve => {
@@ -79,10 +79,7 @@ class Moneybird
           }
 
           res.data.forEach(contact => {
-            contacts.push({
-              id: contact.id,
-              name: this.createName(contact), 
-            });
+            contacts[contact.id] = this.createName(contact);
           });
 
           get(++page);
