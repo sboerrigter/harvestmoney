@@ -21,7 +21,7 @@ class Moneybird
     let label;
 
     if (contact.company_name) {
-      label = (name) ? `${name} (${contact.company_name})` : contact.company_name;
+      label = (name) ? `${contact.company_name} (${name})` : contact.company_name;
     } else if (name) {
       label = name;
     } else {
