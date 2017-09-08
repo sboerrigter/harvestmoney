@@ -14,14 +14,14 @@
         <tbody>
           <tr  v-for="entry in task.entries">
               <td v-if="entry.notes" width="80%">{{ entry.date }} - {{ entry.notes }}</td>
-              <td v-else width="80%">{{ entry.date }} - <em>No description</em></td>
+              <td v-else width="80%">{{ entry.date }} - <em>Geen omschrijving</em></td>
 
               <td width="20%">{{ entry.hours.toLocaleString('nl') }} uur</td>
           </tr>
         </tbody>
       </table>
 
-      <button class="button is-warning" @click="invoice" href="#">Factureer</button>
+      <button class="button is-warning" @click="invoice()" href="#">Factureer</button>
     </div>
   </div>
 </template>
@@ -53,8 +53,10 @@
     },
 
     methods: {
-      invoice: function () {
-        moneybird.createInvoice(this.entries);
+      invoice() {
+        entries.get(this.project).then(entries => {
+          moneybird.createInvoice(this.entries);
+        });
       }
     }
   }
