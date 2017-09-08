@@ -38,7 +38,7 @@
     },
 
     mounted() {
-      contacts.get().then(contacts => {
+      contacts.getAll().then(contacts => {
         this.contacts = contacts;
       });
 

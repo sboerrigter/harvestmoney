@@ -22,7 +22,7 @@
       </table>
 
       <div class="select">
-        <select v-model="contact" required>
+        <select v-model="contact" v-on:change="saveChoice" required>
           <option value="">
             Selecteer contact
           </option>
@@ -56,6 +56,7 @@
 </style>
 
 <script>
+  import contacts from '../lib/contacts';
   import entries from '../lib/entries';
   import moneybird from '../lib/moneybird';
   import Loader from './Loader.vue';
@@ -71,7 +72,7 @@
 
     data() {
       return {
-        contact: '',
+        contact: contacts.getPreviousChoice(this.project.id),
         entries: false,
       }
     },
@@ -89,6 +90,9 @@
             this.entries = false;
           });
         });
+      },
+      saveChoice() {
+        contacts.save(this.contact, this.project.id);
       }
     }
   }
