@@ -20,8 +20,19 @@
         </tbody>
       </table>
 
+      <div class="select">
+        <select>
+          <option value="">
+            Selecteer contact
+          </option>
 
-      <button class="button is-warning" @click="invoice" href="#" v-bind:disabled="!hasContact">Factureer</button>
+          <option v-for="contact in contacts" v-bind:value="contact.id">
+            {{ contact.name }}
+          </option>
+        </select>
+      </div>
+
+      <button class="button is-warning" @click="invoice" href="#">Factureer</button>
 
       <pre v-if="test">
         {{ test }}
@@ -42,12 +53,11 @@
       'loader': Loader,
     },
 
-    props: ['project'],
+    props: ['project', 'contacts'],
 
     data() {
       return {
         entries: false,
-        hasContact: false,
         test: false,
       }
     },
