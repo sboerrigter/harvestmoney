@@ -25,7 +25,7 @@ Then remove the default value at "Intercepted URL’s or URL patterns" and add `
 
 ## Environment variables
 
-Create a `env.js` file to setup the following local environment variables. See `env.js.example` for an example.
+Create a `env.js` file in the project root to setup the following local environment variables. See `env.js.example` for an example.
 
 ```
 export default {
