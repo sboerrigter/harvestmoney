@@ -8,12 +8,13 @@ class Moneybird
     this.clientId = env.MONEYBIRD_CLIENT_ID; // Should be declared in env.js
     this.clientSecret = env.MONEYBIRD_CLIENT_SECRET; // Should be declared in env.js
     this.administrationId = env.MONEYBIRD_ADMINISTRATION_ID; // Should be declared in env.js
-    this.hourlyRate = env.HOURLY_RATE; // Should be declared in env.js
 
     this.baseUrl = 'https://moneybird.com';
     this.currentUrl = new URL(document.location);
 
     this.accessToken = this.getAccessToken();
+
+    this.hourlyRate = '85';
   }
 
   getAccessToken() {
