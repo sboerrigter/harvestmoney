@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import moneybird from '../lib/moneybird';
+  import contacts from '../lib/contacts';
   import projects from '../lib/projects.js';
   import Project from './Project.vue';
   import Loader from './Loader.vue';
@@ -38,7 +38,7 @@
     },
 
     mounted() {
-      moneybird.getContacts().then(contacts => {
+      contacts.get().then(contacts => {
         this.contacts = contacts;
       });
 
