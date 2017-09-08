@@ -3,7 +3,7 @@
     <div class="content">
       <h3>{{ project.name }}</h3>
 
-      <table class="table" v-for="task in entries">
+      <table class="table" v-for="task in entries" :key="task.id">
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="entry in task.entries">
+          <tr  v-for="entry in task.entries" :key="entry.id">
               <td v-if="entry.notes" width="80%">{{ entry.date }} - {{ entry.notes }}</td>
               <td v-else width="80%">{{ entry.date }} - <em>Geen omschrijving</em></td>
 
@@ -21,12 +21,42 @@
         </tbody>
       </table>
 
-      <button class="button is-warning" @click="invoice()" href="#">Factureer</button>
+      <div class="select">
+        <select v-model="contact" v-on:change="saveChoice" required>
+          <option value="">
+            Selecteer contact
+          </option>
+
+          <option v-for="(name, id) in contacts" v-bind:value="id" :key="id">
+            {{ name }}
+          </option>
+        </select>
+      </div>
+
+      <button class="button is-warning" @click="invoice" v-bind:disabled="!contact">Factureer</button>
     </div>
   </div>
 </template>
 
+<style  lang="scss">
+  .select select {
+    max-width: 300px;
+  }
+
+  .select select:focus,
+  .select select.is-focused,
+  .select select:active,
+  .select select.is-active {
+    border-color: #b5b5b5;
+  }
+
+  .select:not(.is-multiple)::after {
+    border-color: #363636 !important;
+  }
+</style>
+
 <script>
+  import contacts from '../lib/contacts';
   import entries from '../lib/entries';
   import moneybird from '../lib/moneybird';
   import Loader from './Loader.vue';
@@ -38,10 +68,11 @@
       'loader': Loader,
     },
 
-    props: ['project'],
+    props: ['project', 'contacts'],
 
     data() {
       return {
+        contact: contacts.getPreviousChoice(this.project.id),
         entries: false,
       }
     },
@@ -55,10 +86,13 @@
     methods: {
       invoice() {
         entries.get(this.project).then(entries => {
-          moneybird.createInvoice(this.entries).then(response => {
+          moneybird.createInvoice(this.entries, this.contact).then(response => {
             this.entries = false;
           });
         });
+      },
+      saveChoice() {
+        contacts.save(this.contact, this.project.id);
       }
     }
   }

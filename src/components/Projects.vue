@@ -1,9 +1,9 @@
 <template>
   <section class="section">
-    <div class="container" v-if="projects">
+    <div class="container" v-if="contacts && projects">
       <h1 class="title">Ongefactureerde uren</h1>
 
-      <project v-for="project in projects" :project="project" :key="project.id"></project>
+      <project v-for="project in projects" :project="project" :key="project.id" :contacts="contacts"></project>
     </div>
 
     <div class="container" v-else>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import contacts from '../lib/contacts';
   import projects from '../lib/projects.js';
   import Project from './Project.vue';
   import Loader from './Loader.vue';
@@ -31,11 +32,16 @@
 
     data() {
       return {
-        projects: false
+        contacts: false,
+        projects: false,
       }
     },
 
     mounted() {
+      contacts.getAll().then(contacts => {
+        this.contacts = contacts;
+      });
+
       projects.get().then(projects => {
         this.projects = projects;
       });

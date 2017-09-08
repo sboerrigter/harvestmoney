@@ -17,6 +17,21 @@ class Moneybird
     this.hourlyRate = '85';
   }
 
+  createName(contact) {
+    const name = (contact.firstname && contact.lastname) ? `${contact.firstname} ${contact.lastname}` : contact.firstname;
+    let label;
+
+    if (contact.company_name) {
+      label = (name) ? `${contact.company_name} (${name})` : contact.company_name;
+    } else if (name) {
+      label = name;
+    } else {
+      label = contact.firstname;
+    }
+
+    return label;
+  }
+
   getAccessToken() {
     /* Get access token from LocalStorage */
     if (localStorage.getItem('moneybird_access_token') !== null) {
@@ -52,6 +67,37 @@ class Moneybird
     this.getRequestToken();
   }
 
+  getContacts() {
+    const contacts = {};
+    const url = `${this.baseUrl}/api/v2/${this.administrationId}/contacts?per_page=100`;
+
+    return new Promise(resolve => {
+      const get = (page = 1) => {
+        return axios(`${url}&page=${page}`, { headers: this.getHeaders() }).then(res => {
+          if (!res.data.length) {
+            resolve(contacts);
+            return;
+          }
+
+          res.data.forEach(contact => {
+            contacts[contact.id] = this.createName(contact);
+          });
+
+          get(++page);
+        });
+      };
+
+      get();
+    });
+  }
+
+  getHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken,
+    };
+  }
+
   getRequestToken() {
     document.location.replace(
       this.baseUrl
@@ -69,10 +115,7 @@ class Moneybird
       baseURL: this.baseUrl,
       url: `api/v2/${this.administrationId}/${endpoint}`,
       data: params,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.accessToken,
-      }
+      headers: this.getHeaders(),
     }).then(response => {
       return response.data;
     }).catch((error) => {
@@ -80,11 +123,11 @@ class Moneybird
     });
   }
 
-  createInvoice(entries) {
+  createInvoice(entries, id) {
     return this.post('sales_invoices', {
       'sales_invoice': {
         'reference': `Uren ${date.getLastMonthName()} 2017`,
-        'contact_id': 134619291935835380, // Trendwerk
+        'contact_id': id,
         'details_attributes': this.formatEntries(entries),
       }
     });
