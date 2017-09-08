@@ -7,7 +7,8 @@
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
-            <th width="20%">{{ task.total }} uur</th>
+
+            <th width="20%">{{ task.total.toLocaleString('nl') }} uur</th>
           </tr>
         </thead>
         <tbody>
@@ -15,16 +16,12 @@
               <td v-if="entry.notes" width="80%">{{ entry.date }} - {{ entry.notes }}</td>
               <td v-else width="80%">{{ entry.date }} - <em>No description</em></td>
 
-              <td width="20%">{{ entry.hours }} uur</td>
+              <td width="20%">{{ entry.hours.toLocaleString('nl') }} uur</td>
           </tr>
         </tbody>
       </table>
 
       <button class="button is-warning" @click="invoice" href="#">Factureer</button>
-
-      <pre v-if="test">
-        {{ test }}
-      </pre>
     </div>
   </div>
 </template>
@@ -46,7 +43,6 @@
     data() {
       return {
         entries: false,
-        test: false,
       }
     },
 
@@ -58,9 +54,7 @@
 
     methods: {
       invoice: function () {
-        moneybird.createInvoice().then(response => {
-          this.test = response;
-        });
+        moneybird.createInvoice(this.entries);
       }
     }
   }
