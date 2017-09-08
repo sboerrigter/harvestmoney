@@ -1,4 +1,5 @@
 import axios from 'axios';
+import date from './date.js';
 import env from '../../env.js';
 
 class Moneybird
@@ -78,12 +79,12 @@ class Moneybird
     });
   }
 
-  createInvoice(project, entries) {
+  createInvoice(entries) {
     return this.post('sales_invoices', {
-      "sales_invoice": {
-        "reference": `Uren [LASTMONTH] 2017`,
-        "contact_id": 134619291935835380, // Trendwerk
-        "details_attributes": this.formatEntries(entries),
+      'sales_invoice': {
+        'reference': `Uren ${date.getLastMonthName()} 2017`,
+        'contact_id': 134619291935835380, // Trendwerk
+        'details_attributes': this.formatEntries(entries),
       }
     });
   }
@@ -92,11 +93,21 @@ class Moneybird
     const output = [];
 
     entries.forEach(task => {
-      output.push({
-          "amount": `${task.total.toLocaleString('nl')} uur`,
-          "description": task.name,
-          "price": this.hourlyRate
+      if (task.name !== 'Meerwerk') {
+        output.push({
+          'amount': `${task.total.toLocaleString('nl')} uur`,
+          'description': task.name,
+          'price': this.hourlyRate
         });
+      } else {
+        task.entries.forEach(entry => {
+          output.push({
+            'amount': `${entry.hours.toLocaleString('nl')} uur`,
+            'description': `${entry.date}: ${entry.notes}`,
+            'price': this.hourlyRate
+          });
+        });
+      }
     });
 
     return output;
