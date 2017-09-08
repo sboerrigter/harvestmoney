@@ -20,7 +20,8 @@
         </tbody>
       </table>
 
-      <button class="button is-warning" @click="invoice" href="#">Factureer</button>
+
+      <button class="button is-warning" @click="invoice" href="#" v-bind:disabled="!hasContact">Factureer</button>
 
       <pre v-if="test">
         {{ test }}
@@ -46,6 +47,7 @@
     data() {
       return {
         entries: false,
+        hasContact: false,
         test: false,
       }
     },
