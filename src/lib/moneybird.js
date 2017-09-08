@@ -125,11 +125,11 @@ class Moneybird
     });
   }
 
-  createInvoice(entries) {
+  createInvoice(entries, id) {
     return this.post('sales_invoices', {
       'sales_invoice': {
         'reference': `Uren ${date.getLastMonthName()} 2017`,
-        'contact_id': 134619291935835380, // Trendwerk
+        'contact_id': id,
         'details_attributes': this.formatEntries(entries),
       }
     });

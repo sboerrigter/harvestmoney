@@ -22,7 +22,7 @@
       </table>
 
       <div class="select">
-        <select>
+        <select v-model="contact" required>
           <option value="">
             Selecteer contact
           </option>
@@ -54,6 +54,7 @@
 
     data() {
       return {
+        contact: '',
         entries: false,
       }
     },
@@ -67,7 +68,7 @@
     methods: {
       invoice() {
         entries.get(this.project).then(entries => {
-          moneybird.createInvoice(this.entries).then(response => {
+          moneybird.createInvoice(this.entries, this.contact).then(response => {
             this.entries = false;
           });
         });
