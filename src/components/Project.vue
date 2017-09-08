@@ -33,7 +33,7 @@
         </select>
       </div>
 
-      <button class="button is-warning" @click="invoice" href="#" v-bind:disabled="!contact">Factureer</button>
+      <button class="button is-warning" @click="invoice" v-bind:disabled="!contact">Factureer</button>
     </div>
   </div>
 </template>
