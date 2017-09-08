@@ -3,7 +3,7 @@
     <div class="content">
       <h3>{{ project.name }}</h3>
 
-      <table class="table" v-for="task in entries">
+      <table class="table" v-for="task in entries" :key="task.id">
         <thead>
           <tr>
             <th width="80%">{{ task.name }}</th>
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr  v-for="entry in task.entries">
+          <tr  v-for="entry in task.entries" :key="entry.id">
               <td v-if="entry.notes" width="80%">{{ entry.date }} - {{ entry.notes }}</td>
               <td v-else width="80%">{{ entry.date }} - <em>Geen omschrijving</em></td>
 
