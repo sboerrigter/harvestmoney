@@ -55,7 +55,9 @@
     methods: {
       invoice() {
         entries.get(this.project).then(entries => {
-          moneybird.createInvoice(this.entries);
+          moneybird.createInvoice(this.entries).then(response => {
+            this.entries = false;
+          });
         });
       }
     }
