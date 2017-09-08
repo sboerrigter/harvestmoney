@@ -38,6 +38,23 @@
   </div>
 </template>
 
+<style  lang="scss">
+  .select select {
+    max-width: 300px;
+  }
+
+  .select select:focus,
+  .select select.is-focused,
+  .select select:active,
+  .select select.is-active {
+    border-color: #b5b5b5;
+  }
+
+  .select:not(.is-multiple)::after {
+    border-color: #363636 !important;
+  }
+</style>
+
 <script>
   import entries from '../lib/entries';
   import moneybird from '../lib/moneybird';
