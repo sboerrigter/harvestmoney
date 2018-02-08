@@ -9,10 +9,10 @@ Easily create MoneyBird invoices from Harvest reports.
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm start
 
 # build for production with minification
-npm run build
+npm build
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
