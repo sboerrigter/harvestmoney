@@ -16,8 +16,11 @@ class Harvest
   }
 
   getAccessToken() {
+    const expireDate = localStorage.getItem('harvest_access_token_expire');
+    const now = Date.now();
+
     /* Get access token from LocalStorage */
-    if (localStorage.getItem('harvest_access_token') !== null) {
+    if (expireDate && (expireDate > now)) {
       return localStorage.getItem('harvest_access_token');
     }
 
@@ -26,6 +29,7 @@ class Harvest
       const accessToken = this.currentUrl.hash.split('access_token=')[1].split('&')[0];
 
       localStorage.setItem('harvest_access_token', accessToken);
+      localStorage.setItem('harvest_access_token_expire', now + 86400);
 
       return accessToken;
     }
