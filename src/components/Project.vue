@@ -1,7 +1,11 @@
 <template>
   <div class="box" v-if="entries[0]">
     <div class="content">
-      <h3>{{ project.name }}</h3>
+      <h3>
+        <a class="is-warning" :href="'https://trendwerk.harvestapp.com/projects/' + project.id" target="_blank" style="color: black">
+          {{ project.name }}
+        </a>
+      </h3>
 
       <table class="table" v-for="task in entries" :key="task.id">
         <thead>
