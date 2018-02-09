@@ -132,7 +132,7 @@ class Moneybird
   createInvoice(entries, id) {
     return this.post('sales_invoices', {
       'sales_invoice': {
-        'reference': `Uren ${date.getLastMonthName()} 2017`,
+        'reference': `Uren ${date.getLastMonthName()} 2018`,
         'contact_id': id,
         'details_attributes': this.formatEntries(entries),
       }
