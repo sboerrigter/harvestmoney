@@ -33,11 +33,11 @@ class Moneybird
   }
 
   getAccessToken() {
-    const expireDate = localStorage.getItem('moneybird_access_token_expire');
+    const expireDate = parseInt(localStorage.getItem('moneybird_access_token_expire'));
     const now = Date.now();
 
     /* Get access token from LocalStorage */
-    if (expireDate && (expireDate > now)) {
+    if (expireDate && (expireDate < now)) {
       return localStorage.getItem('moneybird_access_token');
     }
 
@@ -62,17 +62,15 @@ class Moneybird
           'Content-Type': 'text/plain',
         }
       }).then(response => {
-        console.log('test');
         localStorage.setItem('moneybird_access_token', response.data.access_token);
         localStorage.setItem('moneybird_access_token_expire', now + 86400);
 
         return response.data.access_token;
       });
-    } else {
-
-      /* Get a new request token */
-      this.getRequestToken();
     }
+
+    /* Get a new request token */
+    this.getRequestToken();
   }
 
   getRequestToken() {
