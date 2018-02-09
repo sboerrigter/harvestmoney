@@ -45,6 +45,8 @@ class Moneybird
     const requestToken = this.currentUrl.searchParams.get('code');
 
     if (requestToken !== null) {
+      alert('nu moet je die cors plugin aanzetten');
+
       return axios.request({
         method: 'post',
         baseURL: this.baseUrl,
@@ -60,15 +62,17 @@ class Moneybird
           'Content-Type': 'text/plain',
         }
       }).then(response => {
+        console.log('test');
         localStorage.setItem('moneybird_access_token', response.data.access_token);
         localStorage.setItem('moneybird_access_token_expire', now + 86400);
 
         return response.data.access_token;
       });
-    }
+    } else {
 
-    /* Get a new request token */
-    this.getRequestToken();
+      /* Get a new request token */
+      this.getRequestToken();
+    }
   }
 
   getRequestToken() {
