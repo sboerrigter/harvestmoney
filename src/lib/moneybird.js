@@ -45,7 +45,7 @@ class Moneybird
     const requestToken = this.currentUrl.searchParams.get('code');
 
     if (requestToken !== null) {
-      alert('nu moet je die cors plugin aanzetten');
+      alert('Nu moet je die CORS plugin aanzetten');
 
       return axios.request({
         method: 'post',
