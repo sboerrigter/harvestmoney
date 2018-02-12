@@ -37,7 +37,7 @@ class Moneybird
     const now = Date.now();
 
     /* Get access token from LocalStorage */
-    if (expireDate && (expireDate < now)) {
+    if (expireDate && (now < expireDate)) {
       return localStorage.getItem('moneybird_access_token');
     }
 
@@ -125,7 +125,7 @@ class Moneybird
     }).then(response => {
       return response.data;
     }).catch((error) => {
-      this.getRequestToken();
+      this.getAccessToken();
     });
   }
 
