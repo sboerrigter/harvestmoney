@@ -5,7 +5,7 @@
     {{ $project->name }}
   </h1>
 
-  <a class="button is-warning" href="/projects/">
+  <a class="button" href="/projects/">
     Back to the projects overview
   </a>
 @endsection
