@@ -25,6 +25,8 @@ class ProjectController extends Controller
 
     public function store()
     {
-        dd(request()->all());
+        Project::create(request(['name', 'client']));
+
+        return redirect('/projects');
     }
 }
